@@ -39,7 +39,7 @@ st.markdown("""
 # === Load Dataset (cached) ===
 @st.cache_data
 def load_dataset():
-    df = pd.read_csv("https://github.com/stokedforAyham/rec_llm_study/releases/download/v1.0/v8_ready_to_combine_vector.csv")
+    df = pd.read_csv("https://firebasestorage.googleapis.com/v0/b/movie-recommender-logs.firebasestorage.app/o/v8_ready_to_combine_vector.csv?alt=media")
     df['title'] = df['title'].astype(str).str.strip()
     return df
 
