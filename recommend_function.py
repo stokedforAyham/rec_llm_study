@@ -2,8 +2,8 @@ import pandas as pd
 import ast
 
 # === Load Dataset and Precomputed Similarity Matrix ===
-df_full = pd.read_csv("v8_ready_to_combine_vector.csv")
-sim_matrix_df = pd.read_csv("precomputed_similar_movies_chunked.csv")
+df_full = pd.read_csv("https://firebasestorage.googleapis.com/v0/b/movie-recommender-logs.firebasestorage.app/o/v8_ready_to_combine_vector.csv?alt=media")
+sim_matrix_df = pd.read_csv("https://firebasestorage.googleapis.com/v0/b/movie-recommender-logs.firebasestorage.app/o/precomputed_similar_movies_chunked.csv?alt=media")
 
 # Convert stringified lists back to real lists
 sim_matrix_df["top_similar_movies"] = sim_matrix_df["top_similar_movies"].apply(ast.literal_eval)
