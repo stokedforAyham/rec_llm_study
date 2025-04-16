@@ -1,10 +1,9 @@
 from prompt_builder_v2 import build_prompt
 import openai
 import os
-
 # Set your OpenAI API key (or use environment variable)
-import os
-openai.api_key = os.getenv("OPENAI_API_KEY")
+import streamlit as st
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def rewrite_synopsis(
     movie_title: str,
