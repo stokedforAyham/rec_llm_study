@@ -4,6 +4,7 @@ import uuid
 import json
 from datetime import datetime
 
+
 import sys
 from pathlib import Path
 
@@ -14,6 +15,19 @@ if str(ROOT) not in sys.path:
 
 from recommend_function import get_similar_movies
 from rewrite_synopsis_v2 import rewrite_synopsis
+
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+import streamlit as st
+
+@st.cache_resource
+def init_firestore():
+    cred = credentials.Certificate(st.secrets["firebase"])
+    firebase_admin.initialize_app(cred)
+    return firestore.client()
+
+db = init_firestore()
 
 st.markdown("""
     <style>
@@ -247,8 +261,7 @@ if submit_feedback:
     }
 
     try:
-        with open("interaction_logs.jsonl", "a") as f:
-            f.write(json.dumps(log_data) + "\n")
+        db.collection("logs").add(log_data)
         st.success("✅ Feedback submitted. You may now try another movie." if language == "English" else "✅ Feedback übermittelt. Du kannst nun einen weiteren Film ausprobieren." if st.session_state.run_count < 3 else "✅ Feedback submitted. Study complete!" if language == "English" else "✅ Feedback übermittelt. Die Studie ist abgeschlossen!")
         if st.session_state.run_count < 3:
             if st.button("Try another movie"):
